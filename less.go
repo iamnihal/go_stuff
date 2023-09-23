@@ -9,7 +9,7 @@ import (
 
 func main() {
 	var (
-		input      []string
+		lines      []string
 		numOfLines int
 	)
 
@@ -23,10 +23,10 @@ func main() {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		input = append(input, scanner.Text())
+		lines = append(lines, scanner.Text())
 	}
 
-	for i := 0; i < numOfLines; i++ {
-		fmt.Println(input[i])
+	for i := len(lines) - 1; i >= len(lines)-numOfLines; i-- {
+		fmt.Println(lines[i])
 	}
 }

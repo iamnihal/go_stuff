@@ -13,7 +13,7 @@ func main() {
 		numOfLines int
 	)
 
-	flag.IntVar(&numOfLines, "n", 0, "Number of lines to read")
+	flag.IntVar(&numOfLines, "n", 10, "Number of lines to read")
 	flag.Parse()
 
 	if numOfLines < 0 {

@@ -106,6 +106,7 @@ func readProxyFromFile(f string) ([]string, error) {
 
 func downloadEngine(u string, p string) error {
 	resp, err := http.Get(u)
+
 	if err != nil {
 		return fmt.Errorf("Error: %s", err)
 	}
@@ -117,6 +118,7 @@ func downloadEngine(u string, p string) error {
 	}
 
 	body, err := io.ReadAll(resp.Body)
+
 	if err != nil {
 		return fmt.Errorf("Error reading response: %s", err)
 	}
@@ -124,13 +126,16 @@ func downloadEngine(u string, p string) error {
 	pattern := regexp.MustCompile(`download-file/([0-9]+)`)
 	match := pattern.FindStringSubmatch(string(body))
 
-	if len(match) < 2 {
+	fmt.Println(match[1])
+
+	if match == nil || len(match) < 2 {
 		return fmt.Errorf("Error: Unable to extract the file ID")
 	}
 
 	du := "https://www.freepik.com/download-file/" + match[1]
 
-	proxyURLParsed, err := url.Parse("http://" + p)
+	proxyURLParsed, err := url.Parse(p)
+
 	if err != nil {
 		return fmt.Errorf("Error while parsing proxy URL: %s", err)
 	}
@@ -144,7 +149,7 @@ func downloadEngine(u string, p string) error {
 	if err != nil {
 		return fmt.Errorf("Error creating request: %s", err)
 	}
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36")
 
 	resp, err = client.Do(req)
 
